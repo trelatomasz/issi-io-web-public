@@ -1,3 +1,5 @@
+"""This is the hello world app"""
+
 from flask import Flask
 from flask import request
 
@@ -10,10 +12,10 @@ def calculate():
     arg1 = request.args.get('arg1', type=int)
     arg2 = request.args.get('arg2', type=int)
 
-    result = calculate(arg1, arg2, op)
+    result = perform_operation(arg1, arg2, op)
     return f"{arg1} {op} {arg2} = {result}"
 
-def calculate(arg1, arg2, op):
+def perform_operation(arg1, arg2, op):
     """Perform operation on two arguments"""
     result = 0
     match op:
