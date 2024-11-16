@@ -1,5 +1,3 @@
-from re import match
-
 from flask import Flask
 from flask import request
 
@@ -25,6 +23,8 @@ def calculate(arg1, arg2, op, result):
         case 'divide':
             if arg2 != 0:
                 result = arg1 / arg2
+    if op == 'add':
+        return arg1 + arg2
     return result
 
 if __name__ == '__main__':
