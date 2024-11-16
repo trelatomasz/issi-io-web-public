@@ -27,7 +27,7 @@ def calculate(arg1, arg2, op, result):
         case 'subtract':
             result = arg1 - arg2
         case 'divide':
-            if (arg2 != 0):
+            if arg2 != 0:
                 result = arg1 / arg2
     return result
 
