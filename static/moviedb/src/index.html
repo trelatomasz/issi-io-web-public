@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta
+            name="description"
+            content="Movie Db"
+    />
+    <title>Movie DB</title>
+    <link rel="icon" href="images/favicon.ico"/>
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"
+    />
+    <link rel="stylesheet" href="lib/normalize.css/normalize.css"/>
+    <link rel="stylesheet" href="lib/milligram/dist/milligram.min.css"/>
+    <link rel="stylesheet" href="styles/main.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+          integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+<main class="wrapper">
+    <section class="container" id="home">
+        <div class="row">
+            <h1>My favourite movies list.</h1>
+        </div>
+
+        <form onsubmit="event.preventDefault(); removeMovies();">
+            <table id="moviesTable">
+                <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Title</th>
+                    <th>Score</th>
+                    <th>Genre</th>
+                    <th>Year</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="movieId-id-1">
+                    <td><input type="checkbox"></td>
+                    <td>The silence of the lambs.</td>
+                    <td>10</td>
+                    <td>Thriller</td>
+                    <td>1995</td>
+                </tr>
+                <tr id="movieId-2">
+                    <td><input type="checkbox"></td>
+                    <td>The Godfather</td>
+                    <td>10.0</td>
+                    <td>Drama,Thriller</td>
+                    <td>1972</td>
+                </tr>
+                </tbody>
+            </table>
+            <input class="button-primary" type="submit" value="Remove selected">
+            <button class="button" onclick="sort()">Sort by: name</button>
+        </form>
+
+        <form onsubmit="event.preventDefault(); addMovie();">
+            <div class="row">
+                <fieldset>
+                    <div class="column">
+                        <label for="titleField">Title</label>
+                    </div>
+                    <div class="column"><input type="text" placeholder="Title..." id="titleField"></div>
+                    <div class="column"><label for="scoreField">Movie Score</label></div>
+                    <div class="column"><select id="scoreField">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+
+                    </select></div>
+                    <div class="column"><label for="genreField">Genre</label></div>
+                    <div class="column"><select id="genreField">
+                        <option value="drama">Drama</option>
+                        <option value="thriller">Thriller</option>
+                        <option value="Action">Action</option>
+                    </select></div>
+
+                    <div class="column"><label for="yearField">Year</label></div>
+                    <div class="column"><input id="yearField" type="text"></div>
+                    <div class="column">
+                        <button onclick="addMovie()"><i class="fa-solid fa-file-circle-plus"></i>  Add Movie Button</button>
+                        <input class="button-primary" type="submit" value="Add Movie Input"></div>
+
+
+                </fieldset>
+            </div>
+        </form>
+    </section>
+</main>
+
+<script src="scripts/main.js"></script>
+</body>
+</html>
