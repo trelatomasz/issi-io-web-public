@@ -2,7 +2,7 @@ from contextvars import ContextVar
 
 import peewee
 
-DATABASE_NAME = "movies.db"
+DATABASE_NAME = "peewee_movies.db"
 db_state_default = {"closed": None, "conn": None, "ctx": None, "transactions": None}
 db_state = ContextVar("db_state", default=db_state_default.copy())
 

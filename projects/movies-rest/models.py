@@ -9,6 +9,7 @@ class BaseModel(Model):
 class Actor(BaseModel):
     name = CharField()
     surname = CharField()
+    born = DateField()
 
 class Movie(BaseModel):
     title = CharField()
