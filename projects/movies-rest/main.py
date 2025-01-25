@@ -1,9 +1,17 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import models, schemas
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="../movies-react/build/static", check_dir=False), name="static")
 
-@app.get("/movies/", response_model=list[schemas.Movie])
+
+@app.get("/")
+def serve_react_app():
+    return FileResponse("../movies-react/build/index.html")
+
+@app.get("/movies", response_model=list[schemas.Movie])
 def get_movies():
     return list(models.Movie.select())
 
@@ -13,7 +21,7 @@ def get_movie(movie_id: int):
     if db_movie is None:
         raise HTTPException(status_code=404, detail="Movie not found")
 
-@app.post("/movies/", response_model = schemas.Movie, status_code=201)
+@app.post("/movies", response_model = schemas.Movie, status_code=201)
 def add_movie(movie: schemas.MovieCreate):
     actors = [models.Actor.get_by_id(actor_id) for actor_id in movie.actors]
     del  movie.actors

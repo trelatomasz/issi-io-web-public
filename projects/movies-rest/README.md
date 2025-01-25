@@ -1,6 +1,8 @@
 # RUN local
 fastapi dev main.py
 
+uvicorn main:app --reload
+
 # TEST
 IDE test.main.http
 

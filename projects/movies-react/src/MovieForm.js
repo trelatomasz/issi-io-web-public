@@ -18,15 +18,20 @@ export default function MovieForm(props) {
     }
 
     return <form onSubmit={addMovie}>
-        <h2>Movie Form</h2>
-        <div>
-            <label>Title</label>
-            <input type="text" value={title} onChange={(event) => setTitle(event.target.value)}/>
+
+        <div className="row">
+            <div className="column">
+                <input type="text" value={title} onChange={(event) => setTitle(event.target.value)}/>
+                <em>Title</em>
+            </div>
+            <div className="column">
+                <input type="text" value={year} onChange={(event) => setYear(event.target.value)}/>
+                <em>Production year</em>
+            </div>
+            <div className="column">
+                <button>{props.buttonName}</button>
+            </div>
         </div>
-        <div>
-            <label>Production year</label>
-            <input type="text" value={year} onChange={(event) => setYear(event.target.value)}/>
-        </div>
-        <button>{props.buttonName}</button>
-    </form>;
+    </form>
+;
 }
