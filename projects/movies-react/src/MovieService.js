@@ -3,19 +3,40 @@ export default class MovieService {
 
     }
 
-    getMovies(setMovies) {
-        const fetchMovies = async () => {
-            const response = await fetch(`/movies`);
-            if (response.ok) {
-                const movies = await response.json();
-                setMovies(movies);
-            }
-            else {
-                throw new Error("Failed to fetch movies");
-            }
-        };
-        fetchMovies();
+    async getMovies() {
+        const response = await fetch(`/movies`);
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error("Failed to fetch movies");
+        }
     }
+
+    async deleteMovie(movie) {
+
+        const response = await fetch('/movies/' + movie.id, {
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            throw new Error("Failed to delete movies");
+        }
+
+    }
+
+    async addMovie(movie) {
+        const response = await fetch('/movies', {
+            method: 'POST',
+            body: JSON.stringify(movie),
+            headers: {'Content-Type': 'application/json'}
+        });
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error("Failed to delete movies");
+        }
+
+    }
+
 
     searchForMovie(movieDetails, setMovies) {
         // const foundMovies = movies.filter(val => {
@@ -29,15 +50,5 @@ export default class MovieService {
         // console.log("Looking for movie...");
     }
 
-    async addMovie(movie, setMovies) {
-        const response = await fetch('/movies', {
-            method: 'POST',
-            body: JSON.stringify(movie),
-            headers: {'Content-Type': 'application/json'}
-        });
-        if (response.ok) {
-            // setMovies([...movies, movie]);
-            // setAddingMovie(false);
-        }
-    }
+
 }

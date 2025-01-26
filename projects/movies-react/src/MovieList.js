@@ -6,12 +6,22 @@ import MovieListItem from "./MovieListItem";
 export default function MovieList(props) {
     const movies = props.movies;
 
-    return <div>
-        <ul>
-              {movies.map(movie => <li key={movie.id}>
-                <MovieListItem movie={movie} onDelete={() => props.onDeleteMovie(movie)}/>
-            </li>)}
-        </ul>
-    </div>
+    return <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Production Year</th>
+            <th>Director</th>
+            <th>Cast</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {movies.map((movie, index) =>
+            <MovieListItem key={movie.id} movie={movie} onDelete={() => props.onDeleteMovie(movie)}/>
+        )}
+        </tbody>
+    </table>
     ;
 }

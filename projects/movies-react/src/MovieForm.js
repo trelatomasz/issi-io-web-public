@@ -7,12 +7,13 @@ export default function MovieForm(props) {
     const [title, setTitle] = useState('');
     const [year, setYear] = useState('');
 
+
     function addMovie(event) {
         event.preventDefault();
-        if (title.length < 5) {
+        if (title.length < 2) {
             return alert('Too short title');
         }
-        props.onMovieSubmit(new Movie(title, year));
+        props.onMovieSubmit(new Movie(title, year, "director",[], "description"));
         setTitle('');
         setYear('');
     }

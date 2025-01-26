@@ -15,8 +15,8 @@ function App() {
     const [searchMovie, setFilterMovie] = useState(false);
 
     const [movies, setMovies] = useState([]);
-    useEffect(() => {
-        movieService.getMovies(setMovies)
+    useEffect( () => {
+        movieService.getMovies().then(movies=> setMovies(movies))
     }, []);
 
     console.log(movies)
@@ -25,20 +25,27 @@ function App() {
     return (
         <div className="container">
             <h1>My favourite movies to watch</h1>
-            { searchMovie
+            {searchMovie
                 ? <>
                     <button onClick={() => setFilterMovie(false)}>Hide filter</button>
                     <MovieForm onMovieSubmit={(movie) => setMovies([...movies, movie])} buttonName="Filter"/>
                 </>
                 : <button onClick={() => setFilterMovie(true)}>Filter</button>}
 
-            <MoviesList movies={movies} onDeleteMovie={(movie) => {}}/>
+            <MoviesList movies={movies} onDeleteMovie={(movie) => {
+                movieService.deleteMovie(movie).then( () => {
+                    setMovies(movies.filter(m => m.id !== movie.id))
+                })
+            }}
+            />
 
             {addingMovie
                 ? <>
                     <button onClick={() => setAddingMovie(false)}>Hide movie</button>
-                    <MovieForm onMovieSubmit={(movie) => setMovies([...movies, movie])} buttonName="Add movie"/>
-                  </>
+                    <MovieForm onMovieSubmit={(movie) => {
+                        movieService.addMovie(movie).then(newMovie => setMovies([...movies, newMovie]));
+                    }} buttonName="Add movie"/>
+                </>
                 : <button onClick={() => setAddingMovie(true)}>Add a movie</button>}
         </div>
     );
