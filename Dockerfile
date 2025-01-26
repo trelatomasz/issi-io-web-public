@@ -3,7 +3,7 @@ COPY projects/movies-react/package.json /var/app/ui/package.json
 COPY projects/movies-react/package-lock.json /var/app/ui/package-lock.json
 WORKDIR /var/app/ui
 RUN npm ci
-COPY projects/movies-react/ui/src /var/app/ui/src
+COPY projects/movies-react/src /var/app/ui/src
 COPY projects/movies-react/public /var/app/ui/public
 RUN npm run build
 
