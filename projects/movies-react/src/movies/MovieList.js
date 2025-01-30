@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import {Movie} from "./model/Movie.js";
+import {Movie} from "../model/Movie.js";
 import MovieListItem from "./MovieListItem";
 
 export default function MovieList(props) {

@@ -1,9 +1,10 @@
-export  class Movie {
-    constructor(title, year, director, actors, description) {
+export class Movie {
+    constructor(title, year, genre, director, description, actors) {
         this.title = title;
         this.year = year;
+        this.genre = genre;
         this.director = director;
-        this.actors = actors;
         this.description = description;
+        this.actors = actors;
     }
 }

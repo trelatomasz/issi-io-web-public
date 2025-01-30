@@ -3,14 +3,16 @@ export default class MovieService {
 
     }
 
-    async getMovies() {
-        const response = await fetch(`/movies`);
+    async getMovies(filterTerm) {
+        const filterParam = filterTerm ? `?filter=${filterTerm}` : '';
+        const response = await fetch(`/movies${filterParam}`);
         if (response.ok) {
             return response.json();
         } else {
             throw new Error("Failed to fetch movies");
         }
     }
+
 
     async deleteMovie(movie) {
 
@@ -32,22 +34,18 @@ export default class MovieService {
         if (response.ok) {
             return await response.json();
         } else {
-            throw new Error("Failed to delete movies");
+            throw new Error("Failed to add movie");
         }
 
     }
 
-
-    searchForMovie(movieDetails, setMovies) {
-        // const foundMovies = movies.filter(val => {
-        //     console.log("Check movie: ", val, newMovie);
-        //     return val.title == newMovie.title && val.year == newMovie.year;
-        // });
-        // console.log("Found movies: ", foundMovies)
-        // if (foundMovies.length > 0) {
-        //     alert("Movies found:" + foundMovies.length)
-        // }
-        // console.log("Looking for movie...");
+    async deleteActorFromMovie(movieId, actorId) {
+        const response = await fetch(`/movies/${movieId}/actors/${actorId}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            throw new Error("Failed to delete an actor from movie cast!");
+        }
     }
 
 
