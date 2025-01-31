@@ -1,12 +1,14 @@
-from datetime import date, datetime
-from typing import Any, List, Union
+from typing import List, Union
 
 from pydantic import BaseModel
 
+
 class ActorBase(BaseModel):
     name: str
-    surname: str
-    born: date
+    age: int
+    sex: str
+    origin: str
+    bio:str
 
 class ActorCreate(ActorBase):
     pass
@@ -21,6 +23,7 @@ class Actor(ActorBase):
 class MovieBase(BaseModel):
     title: str
     year: int
+    genre:str
     director: str
     description: Union[str, None] = None
 
