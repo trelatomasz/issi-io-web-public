@@ -9,12 +9,12 @@ import schemas
 from vector_db import v_db
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="../movies-react/build/static", check_dir=False), name="static")
+app.mount("/static", StaticFiles(directory="../ui/build/static", check_dir=False), name="static")
 
 
 @app.get("/")
 def serve_react_app():
-    return FileResponse("../movies-react/build/index.html")
+    return FileResponse("../ui/public/index.html")
 
 
 @app.get("/movies", response_model=list[schemas.Movie])
