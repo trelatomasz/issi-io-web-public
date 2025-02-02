@@ -5,9 +5,9 @@ WORKDIR /var/app/ui
 RUN npm ci
 
 FROM frontend-deps as frontend
-COPY projects/ui/node_modules /var/app/ui/node_modules
 COPY projects/ui/src /var/app/ui/src
 COPY projects/ui/public /var/app/ui/public
+WORKDIR /var/app/ui
 RUN npm run build
 
 FROM python:3.9 as backend-deps
