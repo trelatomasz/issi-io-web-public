@@ -9,7 +9,7 @@ import schemas
 from vector_db import v_db
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="../ui/build/static", check_dir=False), name="static")
+app.mount("/static", StaticFiles(directory="../ui/public/static", check_dir=False), name="static")
 
 
 @app.get("/")

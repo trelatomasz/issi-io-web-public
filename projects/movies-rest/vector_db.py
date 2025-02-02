@@ -8,6 +8,7 @@ from models import Movie
 qdrant_server_url = os.getenv('QDRANT_SERVER_URL')
 qdrant_api_key = os.getenv('QDRANT_API_KEY')
 
+print(f"{qdrant_server_url = } {qdrant_api_key[:4] = }")
 qc = QdrantClient(
     url=qdrant_server_url,
     api_key=qdrant_api_key,
