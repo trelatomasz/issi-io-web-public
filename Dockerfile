@@ -11,8 +11,8 @@ FROM python:3.9 as backend
 COPY --from=frontend /var/app/ui/build /var/app/ui/build
 COPY projects/movies-rest/requirements.txt /var/app/api/requirements.txt
 WORKDIR /var/app/api
-#RUN  pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-#RUN  pip install transformers tqdm numpy scikit-learn scipy nltk sentencepiece
-#RUN  pip  install --no-deps sentence-transformers
+RUN  pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+RUN  pip install transformers tqdm numpy scikit-learn scipy nltk sentencepiece
+RUN  pip  install --no-deps sentence-transformers
 COPY projects/movies-rest /var/app/api
 CMD ["uvicorn", "main:app", "--port", "80", "--host", "0.0.0.0"]
