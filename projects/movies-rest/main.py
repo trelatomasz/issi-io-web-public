@@ -9,18 +9,18 @@ import schemas
 from vector_db import v_db
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="../ui/public/static", check_dir=False), name="static")
+app.mount("/static", StaticFiles(directory="../ui/build/static", check_dir=False), name="static")
 
 
 @app.get("/")
 def serve_react_app():
-    return FileResponse("../ui/public/index.html")
+    return FileResponse("../ui/build/index.html")
 
 
 @app.get("/movies", response_model=list[schemas.Movie])
 def get_movies(filter: Union[str, None] = None):
     if (filter):
-        movie_ids = v_db.findMovieInVectorDb(filter)
+        movie_ids = v_db.find_movie(filter)
         print("Found following movies for filter ", filter, ": ", movie_ids)
         return list(models.Movie.select().where(models.Movie.id << movie_ids))
     else:
@@ -42,7 +42,7 @@ def add_movie(movie: schemas.MovieCreate):
     # TODO: sometimes there is error
     # UNIQUE constraint failed: movie_actor_through.movie_id, movie_actor_through.actor_id
     db_movie.actors.add(actors)
-    v_db.storeMovieInVectorDb(db_movie)
+    v_db.index_movie(db_movie)
     return db_movie
 
 
@@ -50,7 +50,7 @@ def add_movie(movie: schemas.MovieCreate):
 def delete_movie(movie_id: int):
     db_movie = models.Movie.get_by_id(movie_id)
     db_movie.delete_instance()
-    v_db.deleteMovieInVectorDb(db_movie)
+    v_db.delete_movie(db_movie)
     return None
 
 
@@ -58,8 +58,8 @@ def delete_movie(movie_id: int):
 def delete_movie(movie_id: int, actor_id: int):
     db_movie = models.Movie.get_by_id(movie_id)
     models.ActorMovie.get(movie=db_movie, actor=models.Actor.get_by_id(actor_id)).delete_instance()
-    v_db.deleteMovieInVectorDb(db_movie)
-    v_db.storeMovieInVectorDb(db_movie)
+    v_db.delete_movie(db_movie)
+    v_db.index_movie(db_movie)
     return None
 
 
@@ -86,4 +86,5 @@ def add_actor(actor: schemas.ActorCreate):
 def delete_actor(actor_id: int):
     db_actor = models.Actor.get_by_id(actor_id)
     db_actor.delete_instance()
+    # TODO: update movies in vector db, for movies this actor was in
     return None

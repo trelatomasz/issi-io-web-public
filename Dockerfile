@@ -20,7 +20,12 @@ RUN  pip  install --no-deps sentence-transformers
 
 FROM python:3.9 as backend
 COPY --from=backend-deps /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
-COPY --from=frontend /var/app/ui/build /var/app/ui/public
+COPY --from=frontend /var/app/ui/build /var/app/ui/build
 WORKDIR /var/app/api
 COPY projects/movies-rest /var/app/api
 CMD ["python", "-m", "uvicorn", "main:app", "--port", "80", "--host", "0.0.0.0"]
+
+
+# run locally
+# docker build -t movies-image .
+# docker run -p 8000:80 -e QDRANT_API_KEY=... -e QDRANT_SERVER_URL=... movies-image

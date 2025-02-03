@@ -13,6 +13,7 @@ export default function MovieForm(props) {
     const [genre, setGenre] = useState('');
     const [director, setDirector] = useState('');
     const [description, setDescription] = useState('');
+    const [posterUrl, setPosterUrl] = useState('');
     const [actors, setActors] = useState([]);
 
     const [selectedActors, setSelectedActors] = useState([]);
@@ -34,11 +35,12 @@ export default function MovieForm(props) {
             return alert('Invalid Year');
         }
         const actorsIds = selectedActors.map(actor => actor.value);
-        props.onMovieSubmit(new Movie(title, year, genre, director, description, actorsIds));
+        props.onMovieSubmit(new Movie(title, year, genre, director, description, posterUrl, actorsIds));
         setTitle('');
         setYear('');
         setGenre('');
         setDirector('');
+        setPosterUrl('');
     }
 
     return <form onSubmit={addMovie}>
@@ -60,6 +62,10 @@ export default function MovieForm(props) {
             <div className="column">
                 <input type="text" value={director} onChange={(event) => setDirector(event.target.value)}/>
                 <em>Director</em>
+            </div>
+            <div className="column">
+                <input type="text" value={posterUrl} onChange={(event) => setPosterUrl(event.target.value)}/>
+                <em>PosterUrl</em>
             </div>
             <div className="column">
                 <input type="text" value={description} onChange={(event) => setDescription(event.target.value)}/>

@@ -1,7 +1,7 @@
 import os
 
 from qdrant_client import QdrantClient
-from qdrant_client.http.models import PointStruct
+from qdrant_client.http.models import PointStruct, UpdateResult
 
 from models import Movie
 
@@ -16,25 +16,31 @@ qc = QdrantClient(
 from sentence_encoder import encoder
 
 class VectorDb:
-    collection_name = "moviedb_collection"
 
-    def storeMovieInVectorDb(self, movie: Movie):
-        encoded = encoder.encode(movie.toSentence()).tolist()
-        # print(f"{movie.get_id() =} => {encoded = }")
-        point = PointStruct(id = movie.get_id(),
-                            vector=encoded,
-                            payload={"title": movie.title})
+    def __init__(self, collection_name="moviedb_collection"):
+        self.collection_name = collection_name
 
-        qc.upsert(collection_name=self.collection_name, wait=True, points=[
-            point
-        ])
+    def _enc(self, sentence: str):
+        return encoder.encode(sentence).tolist()
+    def index_movie(self, movie: Movie):
+        print(f"Store movie sentence: {movie.to_sentence() =}s")
+        self.index_all_movies([movie])
 
-    def deleteMovieInVectorDb(self, movie):
+    def index_all_movies(self, movies):
+        print("Store all movies sentences...")
+        qc.upsert(collection_name=self.collection_name,
+                  points=[PointStruct(id=movie.get_id(),
+                                      vector=self._enc(movie.to_sentence()),
+                                      payload={'title':movie.title})
+                          for movie in movies])
+        print("Done")
+
+    def delete_movie(self, movie):
         qc.delete(self.collection_name, [movie.id], wait=True,)
 
-    def findMovieInVectorDb(self, filter):
-        return [result.id for result in (
-            qc.search(self.collection_name, encoder.encode(filter).tolist(),limit=10))]
-
+    def find_movie(self, filter:str):
+        results = qc.search(collection_name=self.collection_name,
+                      query_vector=self._enc(filter),limit=3)
+        return [result.id for result in results]
 
 v_db = VectorDb()

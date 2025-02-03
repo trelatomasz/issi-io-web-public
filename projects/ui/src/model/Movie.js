@@ -1,10 +1,22 @@
 export class Movie {
-    constructor(title, year, genre, director, description, actors) {
+    constructor(title, year, genre, director, plot, posterUrl, actors) {
         this.title = title;
         this.year = year;
-        this.genre = genre;
-        this.director = director;
-        this.description = description;
-        this.actors = actors;
+        if(genre) {
+            this.genres = genre;
+        }
+        if(director){
+            this.director = director;
+        }
+        if(plot) {
+            this.plot = plot;
+        }
+        if(actors) {
+            this.actors = actors;
+        }
+        if(posterUrl) {
+            this.posterUrl = posterUrl
+        }
+
     }
 }

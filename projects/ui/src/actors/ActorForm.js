@@ -6,7 +6,7 @@ import {Actor} from "../model/Actor";
 export default function ActorForm(props) {
 
     const [name, setName] = useState('');
-    const [age, setAge] = useState('');
+    const [age, setAge] = useState();
     const [sex, setSex] = useState('');
     const [origin, setOrigin] = useState('');
     const [bio, setBio] = useState('');

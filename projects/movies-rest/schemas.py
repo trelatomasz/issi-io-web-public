@@ -5,10 +5,10 @@ from pydantic import BaseModel
 
 class ActorBase(BaseModel):
     name: str
-    age: int
-    sex: str
-    origin: str
-    bio:str
+    age:  Union[int, None] = None
+    sex: Union[str, None] = None
+    origin: Union[str, None] = None
+    bio: Union[str, None] = None
 
 class ActorCreate(ActorBase):
     pass
@@ -23,10 +23,11 @@ class Actor(ActorBase):
 class MovieBase(BaseModel):
     title: str
     year: int
-    genre:str
-    director: str
-    description: Union[str, None] = None
-
+    genres: Union[str, None] = None
+    director: Union[str, None] = None
+    runtime: Union[int, None] = None
+    posterUrl: Union[str, None] = None
+    plot: Union[str, None] = None
 
 class MovieCreate(MovieBase):
     actors: List[int]
